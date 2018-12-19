@@ -14,6 +14,7 @@ extern "C" {
 //Calib
 void Fisheye_UndistortImage(Mat distorted, Mat undistorted, Mat k, Mat d);
 void Fisheye_UndistortImageWithParams(Mat distorted, Mat undistorted, Mat k, Mat d, Mat knew, Size size);
+Mat FindEssentialMatrix(Mat points1, Mat points2, double focalLen, Point ppPt, int method, double prob, double threshold, Mat mask);
 
 #ifdef __cplusplus
 }

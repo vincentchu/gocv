@@ -66,3 +66,20 @@ func FisheyeUndistortImageWithParams(distorted Mat, undistorted *Mat, k, d, knew
 	}
 	C.Fisheye_UndistortImageWithParams(distorted.Ptr(), undistorted.Ptr(), k.Ptr(), d.Ptr(), knew.Ptr(), sz)
 }
+
+type RobustEstimationAlgo int
+
+const (
+	LMEDS  RobustEstimationAlgo = 4
+	RANSAC                      = 8
+	RHO                         = 16
+)
+
+func FindEssentialMatrix(points1 Mat, points2 Mat, focalLen float64, principalPoint image.Point, method RobustEstimationAlgo, prob float64, threshold float64, mask Mat) Mat {
+	pp := C.struct_Point{
+		x: C.int(principalPoint.X),
+		y: C.int(principalPoint.Y),
+	}
+
+	return newMat(C.FindEssentialMatrix(points1.Ptr(), points2.Ptr(), C.double(focalLen), pp, C.int(method), C.double(prob), C.double(threshold), mask.Ptr()))
+}

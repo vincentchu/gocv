@@ -10,3 +10,8 @@ void Fisheye_UndistortImageWithParams(Mat distorted, Mat undistorted, Mat k, Mat
     cv::fisheye::undistortImage(*distorted, *undistorted, *k, *d, *knew, sz);
 }
 
+Mat FindEssentialMatrix(Mat points1, Mat points2, double focalLen, Point ppPt, int method, double prob, double threshold, Mat mask) {
+    cv::Point2d pp(ppPt.x, ppPt.y);
+    return new  cv::Mat(cv::findEssentialMat(*points1, *points2, focalLen, pp, method, prob, threshold, *mask));
+}
+
