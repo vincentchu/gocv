@@ -83,3 +83,12 @@ func FindEssentialMatrix(points1 Mat, points2 Mat, focalLen float64, principalPo
 
 	return newMat(C.FindEssentialMatrix(points1.Ptr(), points2.Ptr(), C.double(focalLen), pp, C.int(method), C.double(prob), C.double(threshold), mask.Ptr()))
 }
+
+func RecoverPose(essentialMat Mat, points1 Mat, points2 Mat, R *Mat, t *Mat, focalLen float64, principalPoint image.Point, mask Mat) {
+	pp := C.struct_Point{
+		x: C.int(principalPoint.X),
+		y: C.int(principalPoint.Y),
+	}
+
+	C.RecoverPose(essentialMat.Ptr(), points1.Ptr(), points2.Ptr(), R.p, t.p, C.double(focalLen), pp, mask.Ptr())
+}
